@@ -6,7 +6,7 @@ export default function(server) {
     name: 'Shoe 1',
     quantity: 2,
     price:100,
-    shop: shop2
+    shop: shop
   });
   server.schema.products.create({
     name: 'Shoe 2',

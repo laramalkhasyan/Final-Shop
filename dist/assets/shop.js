@@ -46,7 +46,7 @@
 
   _exports.default = _default;
 });
-;define("shop/controllers/index", ["exports"], function (_exports) {
+;define("shop/controllers/shops/index", ["exports"], function (_exports) {
   "use strict";
 
   Object.defineProperty(_exports, "__esModule", {
@@ -461,7 +461,7 @@
       name: 'Shoe 1',
       quantity: 2,
       price: 100,
-      shop: shop2
+      shop: shop
     });
     server.schema.products.create({
       name: 'Shoe 2',
@@ -667,8 +667,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "laEUjIIw",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"h1\",true],[8],[0,\"Application\"],[9],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "fLuSggbf",
+    "block": "{\"symbols\":[],\"statements\":[[2,\" <h1>Application</h1> \"],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/application.hbs"
     }
@@ -703,8 +703,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "05pMq1Ms",
-    "block": "{\"symbols\":[],\"statements\":[[7,\"h1\",true],[8],[0,\"INDEX\"],[9],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "oqmT68VM",
+    "block": "{\"symbols\":[],\"statements\":[[2,\" <h1>INDEX</h1> \"],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/index.hbs"
     }
@@ -721,8 +721,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "MKTpWwF8",
-    "block": "{\"symbols\":[],\"statements\":[[2,\" <div class=\\\"container\\\">\\n  <div class=\\\"inner-container\\\">\\n    <h2>SHOPS</h2>\\n    <div class=\\\"shops-container\\\">\\n      <ul class=\\\"list\\\">\\n{{#each model as |shop|}}\\n          <li>\\n            {{#link-to \\\"shop\\\" shop class=\\\"ll-shops\\\"}}\\n              {{shop.name}}\\n            {{/link-to}}\\n            <div class=\\\"buttons\\\">\\n              <button type=\\\"button\\\" class=\\\"btn edit\\\">Edit</button>\\n              <button type=\\\"button\\\" class=\\\"btn delete\\\" onclick={{action \\\"deleteShop\\\" shop.id}} >Delete</button>\\n            </div>\\n          </li>\\n        {{/each}}      </ul>\\n    </div>\\n    <div class=\\\"add-shop\\\">\\n{{#if isAddingShop}}\\n        <form onsubmit={{action \\\"saveShop\\\"}}>\\n          {{input type=\\\"text\\\"  value=newShopName placeholder=\\\"New Shop\\\"}}\\n          <button type=\\\"submit\\\" disabled={{isAddButtonDisabled}}>\\n            Add\\n          </button>\\n          <span class=\\\"rr-cancel-icon\\\" onclick={{action \\\"cancelAddShop\\\"}}>\\n            {{fa-icon \\\"times\\\"}}\\n          </span>\\n        </form>\\n      {{else}}\\n        <button type=\\\"button\\\" name=\\\"button\\\" onclick={{action \\\"addShop\\\"}}>Add new shop</button>\\n      {{/if}}    </div>\\n  </div>\\n</div> \"],[0,\"\\n\\n\"],[7,\"h1\",true],[8],[0,\"Shops\"],[9],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "eo0YeHdb",
+    "block": "{\"symbols\":[],\"statements\":[[2,\" <div class=\\\"container\\\">\\n  <div class=\\\"inner-container\\\">\\n    <h2>SHOPS</h2>\\n    <div class=\\\"shops-container\\\">\\n      <ul class=\\\"list\\\">\\n{{#each model as |shop|}}\\n          <li>\\n            {{#link-to \\\"shop\\\" shop class=\\\"ll-shops\\\"}}\\n              {{shop.name}}\\n            {{/link-to}}\\n            <div class=\\\"buttons\\\">\\n              <button type=\\\"button\\\" class=\\\"btn edit\\\">Edit</button>\\n              <button type=\\\"button\\\" class=\\\"btn delete\\\" onclick={{action \\\"deleteShop\\\" shop.id}} >Delete</button>\\n            </div>\\n          </li>\\n        {{/each}}      </ul>\\n    </div>\\n    <div class=\\\"add-shop\\\">\\n{{#if isAddingShop}}\\n        <form onsubmit={{action \\\"saveShop\\\"}}>\\n          {{input type=\\\"text\\\"  value=newShopName placeholder=\\\"New Shop\\\"}}\\n          <button type=\\\"submit\\\" disabled={{isAddButtonDisabled}}>\\n            Add\\n          </button>\\n          <span class=\\\"rr-cancel-icon\\\" onclick={{action \\\"cancelAddShop\\\"}}>\\n            {{fa-icon \\\"times\\\"}}\\n          </span>\\n        </form>\\n      {{else}}\\n        <button type=\\\"button\\\" name=\\\"button\\\" onclick={{action \\\"addShop\\\"}}>Add new shop</button>\\n      {{/if}}    </div>\\n  </div>\\n</div> \"],[0,\"\\n\\n\"],[2,\" <h1>Shops</h1> \"],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/shops.hbs"
     }
@@ -757,8 +757,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "Q9vHb3xQ",
-    "block": "{\"symbols\":[\"product\",\"product\",\"product\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"products\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"name\"],[8],[0,\"\\n    \"],[7,\"h2\",true],[8],[0,\"NAME\"],[9],[0,\"\\n    \"],[7,\"ul\",true],[10,\"class\",\"list\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"        \"],[7,\"li\",true],[8],[0,\"\\n          \"],[1,[23,3,[\"name\"]],false],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[3]},null],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"qty\"],[8],[0,\"\\n    \"],[7,\"h2\",true],[8],[0,\"QTY\"],[9],[0,\"\\n    \"],[7,\"ul\",true],[10,\"class\",\"list\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"        \"],[7,\"li\",true],[8],[0,\"\\n          \"],[1,[23,2,[\"quantity\"]],false],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"price\"],[8],[0,\"\\n    \"],[7,\"h2\",true],[8],[0,\"PRICE\"],[9],[0,\"\\n    \"],[7,\"ul\",true],[10,\"class\",\"list\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"        \"],[7,\"li\",true],[8],[0,\"\\n          \"],[1,[23,1,[\"price\"]],false],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[2,\" <h1>Products</h1>\\n{{log model}}\\n{{#each model.products as |product|}}\\n  <h2>{{product.name}}</h2>\\n{{/each}} \"],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "spSWRf0c",
+    "block": "{\"symbols\":[\"product\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"prod-container\"],[8],[0,\"\\n  \"],[7,\"table\",true],[10,\"class\",\"products\"],[8],[0,\"\\n    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"NAME\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"title\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"QTY\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"PRICE\"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"      \"],[7,\"tr\",true],[8],[0,\"\\n        \"],[7,\"th\",true],[8],[1,[23,1,[\"name\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"prod\"],[8],[1,[23,1,[\"quantity\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[8],[0,\"$\"],[1,[23,1,[\"price\"]],false],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[9],[0,\"\\n  \"],[2,\" {{#each model.products as |product|}}\\n  <div class=\\\"pro-btn icon\\\">\\n    <button type=\\\"button\\\" class=\\\"btn edit\\\">Edit</button>\\n    <button type=\\\"button\\\" class=\\\"btn delete\\\">Delete</button>\\n  </div>\\n  {{/each}} \"],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[2,\" <div >\\n  <div class=\\\"name\\\">\\n\\n    <ul class=\\\"list\\\">\\n\\n        <li>\\n\\n        </li>\\n\\n    </ul>\\n  </div>\\n  <div class=\\\"qty\\\">\\n\\n    <ul class=\\\"list\\\">\\n{{#each model.products as |product|}}\\n        <li>\\n\\n        </li>\\n      {{/each}}    </ul>\\n  </div>\\n  <div class=\\\"price\\\">\\n\\n    <ul class=\\\"list\\\">\\n{{#each model.products as |product|}}\\n        <li>\\n\\n        </li>\\n      {{/each}}    </ul>\\n  </div>\\n</div> \"],[0,\"\\n\\n\"],[2,\" <h1>Products</h1>\\n{{log model}}\\n{{#each model.products as |product|}}\\n  <h2>{{product.name}}</h2>\\n{{/each}} \"],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/shops/products.hbs"
     }
@@ -784,7 +784,7 @@
   });
   QUnit.test('mirage/scenarios/default.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'mirage/scenarios/default.js should pass ESLint\n\n');
+    assert.ok(false, 'mirage/scenarios/default.js should pass ESLint\n\n3:7 - \'shop2\' is assigned a value but never used. (no-unused-vars)');
   });
   QUnit.test('mirage/serializers/application.js', function (assert) {
     assert.expect(1);
@@ -818,7 +818,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("shop/app")["default"].create({"name":"shop","version":"0.0.0"});
+            require("shop/app")["default"].create({"name":"shop","version":"0.0.0+3a162c68"});
           }
         
 //# sourceMappingURL=shop.map

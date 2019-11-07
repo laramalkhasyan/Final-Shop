@@ -1,35 +1,64 @@
-<div class="products">
+<div class="prod-container">
+  <table class="products">
+    <tr>
+      <th class="header">
+        <h2>NAME</h2>
+      </th>
+      <th class="title">
+        <h2>QTY</h2>
+      </th>
+      <th class="header">
+        <h2>PRICE</h2>
+      </th>
+    </tr>
+    {{#each model.products as |product|}}
+      <tr>
+        <th>{{product.name}}</th>
+        <th class="prod">{{product.quantity}}</th>
+        <th>${{product.price}}</th>
+      </tr>
+    {{/each}}
+  </table>
+  <!-- {{#each model.products as |product|}}
+  <div class="pro-btn icon">
+    <button type="button" class="btn edit">Edit</button>
+    <button type="button" class="btn delete">Delete</button>
+  </div>
+  {{/each}} -->
+</div>
+
+<!-- <div >
   <div class="name">
-    <h2>NAME</h2>
+
     <ul class="list">
-      {{#each model.products as |product|}}
+
         <li>
-          {{product.name}}
+
         </li>
-      {{/each}}
+
     </ul>
   </div>
   <div class="qty">
-    <h2>QTY</h2>
+
     <ul class="list">
       {{#each model.products as |product|}}
         <li>
-          {{product.quantity}}
+
         </li>
       {{/each}}
     </ul>
   </div>
   <div class="price">
-    <h2>PRICE</h2>
+
     <ul class="list">
       {{#each model.products as |product|}}
         <li>
-          {{product.price}}
+
         </li>
       {{/each}}
     </ul>
   </div>
-</div>
+</div> -->
 
 <!-- <h1>Products</h1>
 {{log model}}

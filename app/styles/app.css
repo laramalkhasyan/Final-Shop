@@ -50,3 +50,34 @@ li {
   text-decoration: none;
   color: gray;
 }
+table{
+
+  text-align: center;
+}
+th{
+    border-bottom: 1px solid grey;
+    font-size: 20px;
+}
+.title{
+  margin: auto 0px;
+  border: 2px dotted grey;
+  border-top: none;
+}
+.products{
+  border: 2px dotted grey;
+
+}
+.header{
+  border-bottom: 2px dotted grey;
+}
+.prod{
+  border-left: 2px dotted grey;
+  border-right: 2px dotted grey;
+}
+.prod-container{
+  display: flex;
+  justify-content: center;
+}
+.pro-btn{
+  display: flex;
+}

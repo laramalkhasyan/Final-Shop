@@ -16,9 +16,9 @@ define("shop/tests/lint/app.lint-test", [], function () {
     assert.expect(1);
     assert.ok(true, 'components/products.js should pass ESLint\n\n');
   });
-  QUnit.test('controllers/index.js', function (assert) {
+  QUnit.test('controllers/shops/index.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'controllers/index.js should pass ESLint\n\n');
+    assert.ok(true, 'controllers/shops/index.js should pass ESLint\n\n');
   });
   QUnit.test('models/product.js', function (assert) {
     assert.expect(1);
@@ -63,7 +63,7 @@ define("shop/tests/lint/templates.template.lint-test", [], function () {
   QUnit.module('TemplateLint');
   QUnit.test('shop/templates/application.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'shop/templates/application.hbs should pass TemplateLint.\n\n');
+    assert.ok(false, 'shop/templates/application.hbs should pass TemplateLint.\n\nshop/templates/application.hbs\n  1:0  error  HTML comment detected  no-html-comments\n');
   });
   QUnit.test('shop/templates/components/products.hbs', function (assert) {
     assert.expect(1);
@@ -71,11 +71,11 @@ define("shop/tests/lint/templates.template.lint-test", [], function () {
   });
   QUnit.test('shop/templates/index.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'shop/templates/index.hbs should pass TemplateLint.\n\n');
+    assert.ok(false, 'shop/templates/index.hbs should pass TemplateLint.\n\nshop/templates/index.hbs\n  1:0  error  HTML comment detected  no-html-comments\n');
   });
   QUnit.test('shop/templates/shops.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops.hbs should pass TemplateLint.\n\nshop/templates/shops.hbs\n  1:0  error  HTML comment detected  no-html-comments\n');
+    assert.ok(false, 'shop/templates/shops.hbs should pass TemplateLint.\n\nshop/templates/shops.hbs\n  1:0  error  HTML comment detected  no-html-comments\n  37:0  error  HTML comment detected  no-html-comments\n');
   });
   QUnit.test('shop/templates/shops/index.hbs', function (assert) {
     assert.expect(1);
@@ -83,7 +83,7 @@ define("shop/tests/lint/templates.template.lint-test", [], function () {
   });
   QUnit.test('shop/templates/shops/products.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops/products.hbs should pass TemplateLint.\n\nshop/templates/shops/products.hbs\n  34:0  error  HTML comment detected  no-html-comments\n');
+    assert.ok(false, 'shop/templates/shops/products.hbs should pass TemplateLint.\n\nshop/templates/shops/products.hbs\n  22:2  error  HTML comment detected  no-html-comments\n  30:0  error  HTML comment detected  no-html-comments\n  63:0  error  HTML comment detected  no-html-comments\n  2:2  error  Tables must have a table group (thead, tbody or tfoot).  table-groups\n');
   });
 });
 define("shop/tests/lint/tests.lint-test", [], function () {
