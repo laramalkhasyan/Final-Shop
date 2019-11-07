@@ -1,0 +1,52 @@
+.container {
+  background-color: white;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  padding-bottom: 50px;
+}
+
+.shops-container {
+  width: 50%;
+  padding: 20px;
+  border: 2px dotted grey;
+  padding-bottom: 100px;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border-bottom: 1px solid grey;
+  font-size: 20px;
+}
+
+.btn {
+  color: white;
+  font-size: 20px;
+  padding: 8px 30px;
+  border: none;
+}
+
+.edit {
+  background-color: red;
+}
+
+.delete {
+  background-color: green;
+}
+
+.ll-shops {
+  text-decoration: none;
+  color: gray;
+}

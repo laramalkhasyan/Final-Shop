@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="inner-container">
+    <h2>SHOPS</h2>
+    <div class="shops-container">
+      <ul class="list">
+        {{#each model as |shop|}}
+          <li>
+            {{#link-to "shops.products" shop.id class="ll-shops"}}
+              {{shop.name}}
+            {{/link-to}}
+            <div class="buttons">
+              <button type="button" class="btn edit">Edit</button>
+              <button type="button" class="btn delete" onclick={{action "deleteShop" shop.id}} >Delete</button>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="add-shop">
+      {{#if isAddingShop}}
+        <form onsubmit={{action "saveShop"}}>
+          {{input type="text"  value=newShopName placeholder="New Shop"}}
+          <button type="submit" disabled={{isAddButtonDisabled}}>
+            Add
+          </button>
+          <span class="rr-cancel-icon" onclick={{action "cancelAddShop"}}>
+            {{fa-icon "times"}}
+          </span>
+        </form>
+      {{else}}
+        <button type="button" name="button" onclick={{action "addShop"}}>Add new shop</button>
+      {{/if}}
+    </div>
+  </div>
+</div>

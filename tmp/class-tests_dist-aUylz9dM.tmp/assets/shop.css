@@ -1,0 +1,16 @@
+.container {
+  background-color: white;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.shops-container {
+  width: 50%;
+  padding: 20px;
+  border: 2px dotted grey;
+}

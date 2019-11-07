@@ -1,0 +1,32 @@
+<div class="products">
+  <div class="name">
+    <h2>NAME</h2>
+    <ul class="list">
+      {{#each model.products as |product|}}
+        <li>
+          {{product.name}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="qty">
+    <h2>QTY</h2>
+    <ul class="list">
+      {{#each model.products as |product|}}
+        <li>
+          {{product.quantity}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="price">
+    <h2>PRICE</h2>
+    <ul class="list">
+      {{#each model.products as |product|}}
+        <li>
+          {{product.price}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
