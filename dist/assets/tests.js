@@ -22,7 +22,7 @@ define("shop/tests/lint/app.lint-test", [], function () {
   });
   QUnit.test('controllers/shops/products.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'controllers/shops/products.js should pass ESLint\n\n');
+    assert.ok(false, 'controllers/shops/products.js should pass ESLint\n\n4:9 - \'set\' is defined but never used. (no-unused-vars)\n22:9 - Don\'t introduce side-effects in computed properties (ember/no-side-effects)\n48:21 - \'productId\' is defined but never used. (no-unused-vars)');
   });
   QUnit.test('models/product.js', function (assert) {
     assert.expect(1);
@@ -87,7 +87,7 @@ define("shop/tests/lint/templates.template.lint-test", [], function () {
   });
   QUnit.test('shop/templates/shops/products.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops/products.hbs should pass TemplateLint.\n\nshop/templates/shops/products.hbs\n  41:37  error  Interaction added to non-interactive element  no-invalid-interactive\n  2:2  error  Tables must have a table group (thead, tbody or tfoot).  table-groups\n');
+    assert.ok(false, 'shop/templates/shops/products.hbs should pass TemplateLint.\n\nshop/templates/shops/products.hbs\n  58:37  error  Interaction added to non-interactive element  no-invalid-interactive\n  3:2  error  Tables must have a table group (thead, tbody or tfoot).  table-groups\n');
   });
 });
 define("shop/tests/lint/tests.lint-test", [], function () {

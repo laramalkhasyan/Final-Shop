@@ -105,13 +105,20 @@
   var _default = Ember.Controller.extend({
     isAddingProduct: false,
     newProductName: '',
-    newProductQuantity: 0,
-    newProductPrice: 0,
+    newProductQuantity: '',
+    newProductPrice: '',
+    deleteThrigger: false,
+    isEditing: false,
+    // productName:'',
+    // productQuantity:'',
     isAddButtonDisabled: Ember.computed.empty('newProductName'),
-    totalPrice: Ember.computed('newProductQuantity', 'newProductPrice', function () {
+    totalPrice: Ember.computed('newProductQuantity', 'newProductPrice', 'deleteThrigger', function () {
       let price = 0;
       this.model.products.forEach(product => {
         price += product.quantity * product.price;
+      });
+      this.setProperties({
+        deleteThrigger: false
       });
       return price;
     }),
@@ -137,13 +144,19 @@
           newProductName: '',
           newProductQuantity: 0,
           newProductPrice: 0,
-          isAddingProduct: false
-        }); // this.transitionToRoute('bands.band.songs', newBand.id);
+          isAddingProduct: false,
+          deleteThrigger: true
+        });
       },
 
-      editProduct() {},
+      editProduct(productId) {
+        this.toggleProperty('isEditing');
+      },
 
       deleteProduct(productId) {
+        this.setProperties({
+          deleteThrigger: true
+        });
         this.store.findRecord('product', productId).then(function (product) {
           product.deleteRecord();
           product.get('isDeleted');
@@ -825,8 +838,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "Srsz7XdG",
-    "block": "{\"symbols\":[\"product\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"prod-container\"],[8],[0,\"\\n  \"],[7,\"table\",true],[10,\"class\",\"products\"],[8],[0,\"\\n    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"NAME\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"title right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"QTY\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"PRICE\"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"      \"],[7,\"tr\",true],[8],[0,\"\\n        \"],[7,\"th\",true],[8],[1,[23,1,[\"name\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"prod\"],[8],[1,[23,1,[\"quantity\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"right\"],[8],[0,\"$\"],[1,[23,1,[\"price\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[8],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[10,\"type\",\"button\"],[8],[0,\"Edit\"],[9],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteProduct\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[0,\"Total Price $\"],[1,[22,\"totalPrice\"],false],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"add-product\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingProduct\"]]],null,{\"statements\":[[0,\"      \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveProduct\"],null]],[8],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductName\"]],\"New Product Name\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductQuantity\"]],\"New Product Quantity\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductPrice\"]],\"New Product Price\"]]],false],[0,\"\\n        \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n          Add\\n        \"],[9],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddProduct\"],null]],[8],[0,\"\\n          \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"button\",true],[10,\"name\",\"button\"],[10,\"class\",\"add-btn\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addProduct\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new product\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "byl75gTm",
+    "block": "{\"symbols\":[\"product\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"prod-container\"],[8],[0,\"\\n  \"],[7,\"h2\",true],[8],[0,\"Products\"],[9],[0,\"\\n  \"],[7,\"table\",true],[10,\"class\",\"products\"],[8],[0,\"\\n    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"NAME\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"title right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"QTY\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"PRICE\"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"      \"],[7,\"tr\",true],[8],[0,\"\\n        \"],[7,\"th\",true],[8],[1,[23,1,[\"name\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"prod\"],[8],[1,[23,1,[\"quantity\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"right\"],[8],[0,\"$\"],[1,[23,1,[\"price\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[8],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"editProduct\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"\\n            \"],[1,[28,\"if\",[[24,[\"isEditing\"]],\"Save\",\"Edit\"],null],false],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteProduct\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[0,\"Total Price $\"],[1,[22,\"totalPrice\"],false],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"add-product\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingProduct\"]]],null,{\"statements\":[[0,\"      \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveProduct\"],null]],[8],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductName\"]],\"New Product Name\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductQuantity\"]],\"New Product Quantity\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductPrice\"]],\"New Product Price\"]]],false],[0,\"\\n        \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n          Add\\n        \"],[9],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddProduct\"],null]],[8],[0,\"\\n          \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"button\",true],[10,\"name\",\"button\"],[10,\"class\",\"add-btn\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addProduct\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new product\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/shops/products.hbs"
     }
@@ -886,7 +899,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("shop/app")["default"].create({"name":"shop","version":"0.0.0+db8fde2c"});
+            require("shop/app")["default"].create({"name":"shop","version":"0.0.0+873f39f8"});
           }
         
 //# sourceMappingURL=shop.map
