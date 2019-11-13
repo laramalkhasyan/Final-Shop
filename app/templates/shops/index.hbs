@@ -13,6 +13,7 @@
               <button type="button" class="btn delete" onclick={{action "deleteShop" shop.id}} >Delete</button>
             </div>
           </li>
+          {{log shop}}
         {{/each}}
       </ul>
     </div>
@@ -20,7 +21,7 @@
       {{#if isAddingShop}}
         <form onsubmit={{action "saveShop"}}>
           {{input type="text"  value=newShopName placeholder="New Shop"}}
-          <button type="submit" disabled={{isAddButtonDisabled}}>
+          <button type="submit"  disabled={{isAddButtonDisabled}}>
             Add
           </button>
           <span class="rr-cancel-icon" onclick={{action "cancelAddShop"}}>
@@ -28,7 +29,7 @@
           </span>
         </form>
       {{else}}
-        <button type="button" name="button" onclick={{action "addShop"}}>Add new shop</button>
+        <button type="button" name="button" class="add-btn" onclick={{action "addShop"}}>Add new shop</button>
       {{/if}}
     </div>
   </div>

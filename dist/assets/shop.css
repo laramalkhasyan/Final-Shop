@@ -69,6 +69,7 @@ th{
 }
 .header{
   border-bottom: 2px dotted grey;
+  text-align: center;
 }
 .prod{
   border-left: 2px dotted grey;
@@ -76,8 +77,23 @@ th{
 }
 .prod-container{
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 .pro-btn{
   display: flex;
+}
+.right{
+  border-right: 2px dotted grey;
+}
+.border{
+    border-top: 2px dotted grey;
+}
+.add-btn{
+  margin-top:20px;
+  padding: 8px;
+  color: white;
+  font-size: 20px;
+  background-color: slategrey;
 }

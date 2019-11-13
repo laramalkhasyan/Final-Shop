@@ -29,10 +29,11 @@ export default Controller.extend({
 
     },
     deleteShop(shopId){
-      this.store.findRecord('shop',shopId).then(function (shops) {
-        shops.destroyRecord(); // => DELETE to /posts/2
-      });
-
+      this.store.findRecord('shop', shopId).then(function (shop){
+        shop.deleteRecord();
+        shop.get('isDeleted');
+        shop.save();
+      })
     }
   }
 });

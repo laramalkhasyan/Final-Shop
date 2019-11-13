@@ -4,10 +4,10 @@
       <th class="header">
         <h2>NAME</h2>
       </th>
-      <th class="title">
+      <th class="title right">
         <h2>QTY</h2>
       </th>
-      <th class="header">
+      <th class="header right">
         <h2>PRICE</h2>
       </th>
     </tr>
@@ -15,53 +15,35 @@
       <tr>
         <th>{{product.name}}</th>
         <th class="prod">{{product.quantity}}</th>
-        <th>${{product.price}}</th>
+        <th class="right">${{product.price}}</th>
+        <th>
+          <button type="button" class="btn edit">Edit</button>
+          <button type="button" class="btn delete" onclick={{action "deleteProduct" product.id}}>Delete</button>
+        </th>
       </tr>
     {{/each}}
+    <tr>
+      <th></th>
+      <th></th>
+      <th>Total Price ${{totalPrice}}</th>
+    </tr>
   </table>
-  <!-- {{#each model.products as |product|}}
-  <div class="pro-btn icon">
-    <button type="button" class="btn edit">Edit</button>
-    <button type="button" class="btn delete">Delete</button>
+
+  <div class="add-product">
+    {{#if isAddingProduct}}
+      <form onsubmit={{action "saveProduct"}}>
+        {{input type="text"  value=newProductName placeholder="New Product Name"}}
+        {{input type="text"  value=newProductQuantity placeholder="New Product Quantity"}}
+        {{input type="text"  value=newProductPrice placeholder="New Product Price"}}
+        <button type="submit"  disabled={{isAddButtonDisabled}}>
+          Add
+        </button>
+        <span class="rr-cancel-icon" onclick={{action "cancelAddProduct"}}>
+          {{fa-icon "times"}}
+        </span>
+      </form>
+    {{else}}
+      <button type="button" name="button" class="add-btn" onclick={{action "addProduct"}}>Add new product</button>
+    {{/if}}
   </div>
-  {{/each}} -->
 </div>
-
-<!-- <div >
-  <div class="name">
-
-    <ul class="list">
-
-        <li>
-
-        </li>
-
-    </ul>
-  </div>
-  <div class="qty">
-
-    <ul class="list">
-      {{#each model.products as |product|}}
-        <li>
-
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-  <div class="price">
-
-    <ul class="list">
-      {{#each model.products as |product|}}
-        <li>
-
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-</div> -->
-
-<!-- <h1>Products</h1>
-{{log model}}
-{{#each model.products as |product|}}
-  <h2>{{product.name}}</h2>
-{{/each}} -->

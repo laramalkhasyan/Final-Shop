@@ -82,8 +82,72 @@
       editShop() {},
 
       deleteShop(shopId) {
-        this.store.findRecord('shop', shopId).then(function (shops) {
-          shops.destroyRecord(); // => DELETE to /posts/2
+        this.store.findRecord('shop', shopId).then(function (shop) {
+          shop.deleteRecord();
+          shop.get('isDeleted');
+          shop.save();
+        });
+      }
+
+    }
+  });
+
+  _exports.default = _default;
+});
+;define("shop/controllers/shops/products", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.Controller.extend({
+    isAddingProduct: false,
+    newProductName: '',
+    newProductQuantity: 0,
+    newProductPrice: 0,
+    isAddButtonDisabled: Ember.computed.empty('newProductName'),
+    totalPrice: Ember.computed('newProductQuantity', 'newProductPrice', function () {
+      let price = 0;
+      this.model.products.forEach(product => {
+        price += product.quantity * product.price;
+      });
+      return price;
+    }),
+    actions: {
+      addProduct() {
+        this.set('isAddingProduct', true);
+      },
+
+      cancelAddProduct() {
+        this.set('isAddingBand', false);
+      },
+
+      saveProduct(event) {
+        event.preventDefault();
+        let newShop = this.store.createRecord('product', {
+          name: this.newProductName,
+          quantity: this.newProductQuantity,
+          price: this.newProductPrice,
+          shop: this.model
+        });
+        newShop.save();
+        this.setProperties({
+          newProductName: '',
+          newProductQuantity: 0,
+          newProductPrice: 0,
+          isAddingProduct: false
+        }); // this.transitionToRoute('bands.band.songs', newBand.id);
+      },
+
+      editProduct() {},
+
+      deleteProduct(productId) {
+        this.store.findRecord('product', productId).then(function (product) {
+          product.deleteRecord();
+          product.get('isDeleted');
+          product.save();
         });
       }
 
@@ -412,6 +476,10 @@
     this.namespace = '/api';
     this.get('/shops');
     this.get('/shops/:id');
+    this.delete('/shops/:id');
+    this.post('shops');
+    this.post('products');
+    this.delete('/products/:id');
   }
 });
 ;define("shop/mirage/models/product", ["exports", "ember-cli-mirage"], function (_exports, _emberCliMirage) {
@@ -667,8 +735,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "fLuSggbf",
-    "block": "{\"symbols\":[],\"statements\":[[2,\" <h1>Application</h1> \"],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "b/MndCHs",
+    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/application.hbs"
     }
@@ -703,8 +771,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "oqmT68VM",
-    "block": "{\"symbols\":[],\"statements\":[[2,\" <h1>INDEX</h1> \"],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "ztbjmA3F",
+    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/index.hbs"
     }
@@ -721,8 +789,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "eo0YeHdb",
-    "block": "{\"symbols\":[],\"statements\":[[2,\" <div class=\\\"container\\\">\\n  <div class=\\\"inner-container\\\">\\n    <h2>SHOPS</h2>\\n    <div class=\\\"shops-container\\\">\\n      <ul class=\\\"list\\\">\\n{{#each model as |shop|}}\\n          <li>\\n            {{#link-to \\\"shop\\\" shop class=\\\"ll-shops\\\"}}\\n              {{shop.name}}\\n            {{/link-to}}\\n            <div class=\\\"buttons\\\">\\n              <button type=\\\"button\\\" class=\\\"btn edit\\\">Edit</button>\\n              <button type=\\\"button\\\" class=\\\"btn delete\\\" onclick={{action \\\"deleteShop\\\" shop.id}} >Delete</button>\\n            </div>\\n          </li>\\n        {{/each}}      </ul>\\n    </div>\\n    <div class=\\\"add-shop\\\">\\n{{#if isAddingShop}}\\n        <form onsubmit={{action \\\"saveShop\\\"}}>\\n          {{input type=\\\"text\\\"  value=newShopName placeholder=\\\"New Shop\\\"}}\\n          <button type=\\\"submit\\\" disabled={{isAddButtonDisabled}}>\\n            Add\\n          </button>\\n          <span class=\\\"rr-cancel-icon\\\" onclick={{action \\\"cancelAddShop\\\"}}>\\n            {{fa-icon \\\"times\\\"}}\\n          </span>\\n        </form>\\n      {{else}}\\n        <button type=\\\"button\\\" name=\\\"button\\\" onclick={{action \\\"addShop\\\"}}>Add new shop</button>\\n      {{/if}}    </div>\\n  </div>\\n</div> \"],[0,\"\\n\\n\"],[2,\" <h1>Shops</h1> \"],[0,\"\\n\"],[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "ERp7Mr12",
+    "block": "{\"symbols\":[],\"statements\":[[1,[22,\"outlet\"],false],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/shops.hbs"
     }
@@ -739,8 +807,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "zpGI4c/2",
-    "block": "{\"symbols\":[\"shop\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"container\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"inner-container\"],[8],[0,\"\\n    \"],[7,\"h2\",true],[8],[0,\"SHOPS\"],[9],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"shops-container\"],[8],[0,\"\\n      \"],[7,\"ul\",true],[10,\"class\",\"list\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"model\"]]],null,{\"statements\":[[0,\"          \"],[7,\"li\",true],[8],[0,\"\\n\"],[4,\"link-to\",null,[[\"class\",\"route\",\"model\"],[\"ll-shops\",\"shops.products\",[23,1,[\"id\"]]]],{\"statements\":[[0,\"              \"],[1,[23,1,[\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"            \"],[7,\"div\",true],[10,\"class\",\"buttons\"],[8],[0,\"\\n              \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[10,\"type\",\"button\"],[8],[0,\"Edit\"],[9],[0,\"\\n              \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteShop\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"add-shop\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingShop\"]]],null,{\"statements\":[[0,\"        \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveShop\"],null]],[8],[0,\"\\n          \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newShopName\"]],\"New Shop\"]]],false],[0,\"\\n          \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n            Add\\n          \"],[9],[0,\"\\n          \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddShop\"],null]],[8],[0,\"\\n            \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[7,\"button\",true],[10,\"name\",\"button\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addShop\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new shop\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "NtDIwRSh",
+    "block": "{\"symbols\":[\"shop\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"container\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"inner-container\"],[8],[0,\"\\n    \"],[7,\"h2\",true],[8],[0,\"SHOPS\"],[9],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"shops-container\"],[8],[0,\"\\n      \"],[7,\"ul\",true],[10,\"class\",\"list\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"model\"]]],null,{\"statements\":[[0,\"          \"],[7,\"li\",true],[8],[0,\"\\n\"],[4,\"link-to\",null,[[\"class\",\"route\",\"model\"],[\"ll-shops\",\"shops.products\",[23,1,[\"id\"]]]],{\"statements\":[[0,\"              \"],[1,[23,1,[\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"            \"],[7,\"div\",true],[10,\"class\",\"buttons\"],[8],[0,\"\\n              \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[10,\"type\",\"button\"],[8],[0,\"Edit\"],[9],[0,\"\\n              \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteShop\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[1,[28,\"log\",[[23,1,[]]],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"add-shop\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingShop\"]]],null,{\"statements\":[[0,\"        \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveShop\"],null]],[8],[0,\"\\n          \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newShopName\"]],\"New Shop\"]]],false],[0,\"\\n          \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n            Add\\n          \"],[9],[0,\"\\n          \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddShop\"],null]],[8],[0,\"\\n            \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[7,\"button\",true],[10,\"name\",\"button\"],[10,\"class\",\"add-btn\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addShop\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new shop\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/shops/index.hbs"
     }
@@ -757,8 +825,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "spSWRf0c",
-    "block": "{\"symbols\":[\"product\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"prod-container\"],[8],[0,\"\\n  \"],[7,\"table\",true],[10,\"class\",\"products\"],[8],[0,\"\\n    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"NAME\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"title\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"QTY\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"PRICE\"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"      \"],[7,\"tr\",true],[8],[0,\"\\n        \"],[7,\"th\",true],[8],[1,[23,1,[\"name\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"prod\"],[8],[1,[23,1,[\"quantity\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[8],[0,\"$\"],[1,[23,1,[\"price\"]],false],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[9],[0,\"\\n  \"],[2,\" {{#each model.products as |product|}}\\n  <div class=\\\"pro-btn icon\\\">\\n    <button type=\\\"button\\\" class=\\\"btn edit\\\">Edit</button>\\n    <button type=\\\"button\\\" class=\\\"btn delete\\\">Delete</button>\\n  </div>\\n  {{/each}} \"],[0,\"\\n\"],[9],[0,\"\\n\\n\"],[2,\" <div >\\n  <div class=\\\"name\\\">\\n\\n    <ul class=\\\"list\\\">\\n\\n        <li>\\n\\n        </li>\\n\\n    </ul>\\n  </div>\\n  <div class=\\\"qty\\\">\\n\\n    <ul class=\\\"list\\\">\\n{{#each model.products as |product|}}\\n        <li>\\n\\n        </li>\\n      {{/each}}    </ul>\\n  </div>\\n  <div class=\\\"price\\\">\\n\\n    <ul class=\\\"list\\\">\\n{{#each model.products as |product|}}\\n        <li>\\n\\n        </li>\\n      {{/each}}    </ul>\\n  </div>\\n</div> \"],[0,\"\\n\\n\"],[2,\" <h1>Products</h1>\\n{{log model}}\\n{{#each model.products as |product|}}\\n  <h2>{{product.name}}</h2>\\n{{/each}} \"],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "Srsz7XdG",
+    "block": "{\"symbols\":[\"product\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"prod-container\"],[8],[0,\"\\n  \"],[7,\"table\",true],[10,\"class\",\"products\"],[8],[0,\"\\n    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"NAME\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"title right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"QTY\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"PRICE\"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"      \"],[7,\"tr\",true],[8],[0,\"\\n        \"],[7,\"th\",true],[8],[1,[23,1,[\"name\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"prod\"],[8],[1,[23,1,[\"quantity\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"right\"],[8],[0,\"$\"],[1,[23,1,[\"price\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[8],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[10,\"type\",\"button\"],[8],[0,\"Edit\"],[9],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteProduct\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[0,\"Total Price $\"],[1,[22,\"totalPrice\"],false],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"add-product\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingProduct\"]]],null,{\"statements\":[[0,\"      \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveProduct\"],null]],[8],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductName\"]],\"New Product Name\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductQuantity\"]],\"New Product Quantity\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductPrice\"]],\"New Product Price\"]]],false],[0,\"\\n        \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n          Add\\n        \"],[9],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddProduct\"],null]],[8],[0,\"\\n          \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"button\",true],[10,\"name\",\"button\"],[10,\"class\",\"add-btn\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addProduct\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new product\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/shops/products.hbs"
     }
@@ -818,7 +886,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("shop/app")["default"].create({"name":"shop","version":"0.0.0+3a162c68"});
+            require("shop/app")["default"].create({"name":"shop","version":"0.0.0+db8fde2c"});
           }
         
 //# sourceMappingURL=shop.map

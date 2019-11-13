@@ -20,6 +20,10 @@ define("shop/tests/lint/app.lint-test", [], function () {
     assert.expect(1);
     assert.ok(true, 'controllers/shops/index.js should pass ESLint\n\n');
   });
+  QUnit.test('controllers/shops/products.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'controllers/shops/products.js should pass ESLint\n\n');
+  });
   QUnit.test('models/product.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'models/product.js should pass ESLint\n\n');
@@ -63,7 +67,7 @@ define("shop/tests/lint/templates.template.lint-test", [], function () {
   QUnit.module('TemplateLint');
   QUnit.test('shop/templates/application.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/application.hbs should pass TemplateLint.\n\nshop/templates/application.hbs\n  1:0  error  HTML comment detected  no-html-comments\n');
+    assert.ok(true, 'shop/templates/application.hbs should pass TemplateLint.\n\n');
   });
   QUnit.test('shop/templates/components/products.hbs', function (assert) {
     assert.expect(1);
@@ -71,19 +75,19 @@ define("shop/tests/lint/templates.template.lint-test", [], function () {
   });
   QUnit.test('shop/templates/index.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/index.hbs should pass TemplateLint.\n\nshop/templates/index.hbs\n  1:0  error  HTML comment detected  no-html-comments\n');
+    assert.ok(true, 'shop/templates/index.hbs should pass TemplateLint.\n\n');
   });
   QUnit.test('shop/templates/shops.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops.hbs should pass TemplateLint.\n\nshop/templates/shops.hbs\n  1:0  error  HTML comment detected  no-html-comments\n  37:0  error  HTML comment detected  no-html-comments\n');
+    assert.ok(true, 'shop/templates/shops.hbs should pass TemplateLint.\n\n');
   });
   QUnit.test('shop/templates/shops/index.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops/index.hbs should pass TemplateLint.\n\nshop/templates/shops/index.hbs\n  26:39  error  Interaction added to non-interactive element  no-invalid-interactive\n');
+    assert.ok(false, 'shop/templates/shops/index.hbs should pass TemplateLint.\n\nshop/templates/shops/index.hbs\n  27:39  error  Interaction added to non-interactive element  no-invalid-interactive\n  16:10  error  Unexpected {{log}} usage.  no-log\n');
   });
   QUnit.test('shop/templates/shops/products.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops/products.hbs should pass TemplateLint.\n\nshop/templates/shops/products.hbs\n  22:2  error  HTML comment detected  no-html-comments\n  30:0  error  HTML comment detected  no-html-comments\n  63:0  error  HTML comment detected  no-html-comments\n  2:2  error  Tables must have a table group (thead, tbody or tfoot).  table-groups\n');
+    assert.ok(false, 'shop/templates/shops/products.hbs should pass TemplateLint.\n\nshop/templates/shops/products.hbs\n  41:37  error  Interaction added to non-interactive element  no-invalid-interactive\n  2:2  error  Tables must have a table group (thead, tbody or tfoot).  table-groups\n');
   });
 });
 define("shop/tests/lint/tests.lint-test", [], function () {
@@ -101,6 +105,10 @@ define("shop/tests/lint/tests.lint-test", [], function () {
   QUnit.test('unit/controllers/shops-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/controllers/shops-test.js should pass ESLint\n\n');
+  });
+  QUnit.test('unit/controllers/shops/products-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/shops/products-test.js should pass ESLint\n\n');
   });
   QUnit.test('unit/models/product-test.js', function (assert) {
     assert.expect(1);
@@ -173,6 +181,18 @@ define("shop/tests/unit/controllers/shops-test", ["qunit", "ember-qunit"], funct
 
     (0, _qunit.test)('it exists', function (assert) {
       let controller = this.owner.lookup('controller:shops');
+      assert.ok(controller);
+    });
+  });
+});
+define("shop/tests/unit/controllers/shops/products-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
+  "use strict";
+
+  (0, _qunit.module)('Unit | Controller | shops/products', function (hooks) {
+    (0, _emberQunit.setupTest)(hooks); // Replace this with your real tests.
+
+    (0, _qunit.test)('it exists', function (assert) {
+      let controller = this.owner.lookup('controller:shops/products');
       assert.ok(controller);
     });
   });

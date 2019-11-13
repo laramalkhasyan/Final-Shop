@@ -3,5 +3,8 @@ export default function() {
 
     this.get('/shops');
     this.get('/shops/:id');
-
+    this.delete('/shops/:id');
+    this.post('shops');
+    this.post('products');
+    this.delete('/products/:id');
 }
