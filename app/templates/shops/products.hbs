@@ -18,13 +18,13 @@
           <th>{{input class="input-edit" value=product.name}}</th>
           <th>{{input class="input-edit" value=product.quantity}}</th>
           <th>{{input class="input-edit" value=product.price}}</th>
-        </tr>   
+        </tr>
         <th>
           <button type="button" class="btn edit"  onclick={{action "toggleIsEditing"}}>
             {{if isEditing "Save" "Edit"}}
           </button>
           <button type="button" class="btn delete" onclick={{action "deleteProduct" product.id}}>Delete</button>
-        </th>     
+        </th>
       {{else}} --}}
       <tr>
         <th>{{product.name}}</th>
@@ -63,7 +63,7 @@
       <button type="button" name="button" class="add-btn" onclick={{action "addProduct"}}>Add new product</button>
     {{/if}}
   </div>
-  {{!-- <section class="edit-section">
+  <section class="edit-section">
     {{#if isEditing}}
       <form onsubmit={{action "saveProduct"}}>
         {{input class="input-edit" value=newProductName}}
@@ -72,7 +72,7 @@
         <button type="button" class="btn edit"  onclick={{action "deleteProduct" product.id}}>
           {{if isEditing "Save" "Edit"}}
         </button>
-      </form>    
-    {{/if}}      
-  </section> --}}
+      </form>
+    {{/if}}
+  </section>
 </div>

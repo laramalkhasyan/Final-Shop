@@ -5,13 +5,22 @@
       <ul class="list">
         {{#each model as |shop|}}
           <li>
-            {{#link-to "shops.products" shop.id class="ll-shops"}}
-              {{shop.name}}
-            {{/link-to}}
-            <div class="buttons">
-              <button type="button" class="btn edit">Edit</button>
-              <button type="button" class="btn delete" onclick={{action "deleteShop" shop.id}} >Delete</button>
-            </div>
+            {{#if (eq id shop.id)}}
+              <div class='edit-form'>
+                {{input type="text" value=editedName placeholder="new name"}}
+                <div class="buttons">
+                  <button class="btn edit" onclick={{action "editShop" shop.id}}>Save</button>
+                </div>
+              </div>
+            {{else}}
+              {{#link-to "shops.products" shop.id class="ll-shops"}}
+                {{shop.name}}
+              {{/link-to}}
+              <div class="buttons">
+                <button type="submit" class="btn edit" onclick={{action "toggleEdit" shop.id}}>Edit</button>
+                <button type="button" class="btn delete" onclick={{action "deleteShop" shop.id}}>Delete</button>
+              </div>
+            {{/if}}
           </li>
           {{log shop}}
         {{/each}}
@@ -21,7 +30,7 @@
       {{#if isAddingShop}}
         <form onsubmit={{action "saveShop"}}>
           {{input type="text"  value=newShopName placeholder="New Shop"}}
-          <button type="submit"  disabled={{isAddButtonDisabled}}>
+          <button type="submit" disabled={{isAddButtonDisabled}}>
             Add
           </button>
           <span class="rr-cancel-icon" onclick={{action "cancelAddShop"}}>

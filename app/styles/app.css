@@ -30,6 +30,11 @@ li {
   border-bottom: 1px solid grey;
   font-size: 20px;
 }
+.edit-form{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .btn {
   color: white;

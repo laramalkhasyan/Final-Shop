@@ -57,6 +57,9 @@
   var _default = Ember.Controller.extend({
     isAddingShop: false,
     newShopName: '',
+    isEditing: false,
+    editedName: '',
+    id: '',
     isAddButtonDisabled: Ember.computed.empty('newShopName'),
     actions: {
       addShop() {
@@ -79,7 +82,22 @@
         }); // this.transitionToRoute('bands.band.songs', newBand.id);
       },
 
-      editShop() {},
+      toggleEdit(shopId) {
+        this.set('id', shopId);
+        this.toggleProperty('isEditing');
+      },
+
+      editShop(shopId) {
+        let name = this.editedName;
+        this.store.findRecord('shop', shopId).then(shop => {
+          shop.set("name", name);
+          shop.save();
+        });
+        this.setProperties({
+          editedName: '',
+          id: ''
+        });
+      },
 
       deleteShop(shopId) {
         this.store.findRecord('shop', shopId).then(function (shop) {
@@ -109,17 +127,14 @@
     newProductPrice: '',
     deleteThrigger: false,
     isEditing: false,
-    // productName:'',
-    // productQuantity:'',
+    tempPrice: 0,
     isAddButtonDisabled: Ember.computed.empty('newProductName'),
-    totalPrice: Ember.computed('newProductQuantity', 'newProductPrice', 'deleteThrigger', function () {
+    totalPrice: Ember.computed('newProductQuantity', 'newProductPrice', 'tempPrice', function () {
       let price = 0;
       this.model.products.forEach(product => {
         price += product.quantity * product.price;
       });
-      this.setProperties({
-        deleteThrigger: false
-      });
+      price -= this.tempPrice;
       return price;
     }),
     actions: {
@@ -128,7 +143,7 @@
       },
 
       cancelAddProduct() {
-        this.set('isAddingBand', false);
+        this.set('isAddingProduct', false);
       },
 
       saveProduct(event) {
@@ -153,14 +168,16 @@
         this.toggleProperty('isEditing');
       },
 
-      deleteProduct(productId) {
-        this.setProperties({
-          deleteThrigger: true
-        });
-        this.store.findRecord('product', productId).then(function (product) {
+      async deleteProduct(productId) {
+        let temp = 0;
+        await this.store.findRecord('product', productId).then(function (product) {
+          temp = product.price * product.quantity;
+          console.log(temp, "inner temp");
           product.deleteRecord();
-          product.get('isDeleted');
           product.save();
+        });
+        this.setProperties({
+          tempPrice: temp
         });
       }
 
@@ -168,6 +185,25 @@
   });
 
   _exports.default = _default;
+});
+;define("shop/helpers/and", ["exports", "ember-truth-helpers/helpers/and"], function (_exports, _and) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _and.default;
+    }
+  });
+  Object.defineProperty(_exports, "and", {
+    enumerable: true,
+    get: function () {
+      return _and.and;
+    }
+  });
 });
 ;define("shop/helpers/app-version", ["exports", "shop/config/environment", "ember-cli-app-version/utils/regexp"], function (_exports, _environment, _regexp) {
   "use strict";
@@ -208,6 +244,209 @@
 
   _exports.default = _default;
 });
+;define("shop/helpers/eq", ["exports", "ember-truth-helpers/helpers/equal"], function (_exports, _equal) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _equal.default;
+    }
+  });
+  Object.defineProperty(_exports, "equal", {
+    enumerable: true,
+    get: function () {
+      return _equal.equal;
+    }
+  });
+});
+;define("shop/helpers/gt", ["exports", "ember-truth-helpers/helpers/gt"], function (_exports, _gt) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _gt.default;
+    }
+  });
+  Object.defineProperty(_exports, "gt", {
+    enumerable: true,
+    get: function () {
+      return _gt.gt;
+    }
+  });
+});
+;define("shop/helpers/gte", ["exports", "ember-truth-helpers/helpers/gte"], function (_exports, _gte) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _gte.default;
+    }
+  });
+  Object.defineProperty(_exports, "gte", {
+    enumerable: true,
+    get: function () {
+      return _gte.gte;
+    }
+  });
+});
+;define("shop/helpers/is-array", ["exports", "ember-truth-helpers/helpers/is-array"], function (_exports, _isArray) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _isArray.default;
+    }
+  });
+  Object.defineProperty(_exports, "isArray", {
+    enumerable: true,
+    get: function () {
+      return _isArray.isArray;
+    }
+  });
+});
+;define("shop/helpers/is-empty", ["exports", "ember-truth-helpers/helpers/is-empty"], function (_exports, _isEmpty) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _isEmpty.default;
+    }
+  });
+});
+;define("shop/helpers/is-equal", ["exports", "ember-truth-helpers/helpers/is-equal"], function (_exports, _isEqual) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _isEqual.default;
+    }
+  });
+  Object.defineProperty(_exports, "isEqual", {
+    enumerable: true,
+    get: function () {
+      return _isEqual.isEqual;
+    }
+  });
+});
+;define("shop/helpers/lt", ["exports", "ember-truth-helpers/helpers/lt"], function (_exports, _lt) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _lt.default;
+    }
+  });
+  Object.defineProperty(_exports, "lt", {
+    enumerable: true,
+    get: function () {
+      return _lt.lt;
+    }
+  });
+});
+;define("shop/helpers/lte", ["exports", "ember-truth-helpers/helpers/lte"], function (_exports, _lte) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _lte.default;
+    }
+  });
+  Object.defineProperty(_exports, "lte", {
+    enumerable: true,
+    get: function () {
+      return _lte.lte;
+    }
+  });
+});
+;define("shop/helpers/not-eq", ["exports", "ember-truth-helpers/helpers/not-equal"], function (_exports, _notEqual) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _notEqual.default;
+    }
+  });
+  Object.defineProperty(_exports, "notEq", {
+    enumerable: true,
+    get: function () {
+      return _notEqual.notEq;
+    }
+  });
+});
+;define("shop/helpers/not", ["exports", "ember-truth-helpers/helpers/not"], function (_exports, _not) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _not.default;
+    }
+  });
+  Object.defineProperty(_exports, "not", {
+    enumerable: true,
+    get: function () {
+      return _not.not;
+    }
+  });
+});
+;define("shop/helpers/or", ["exports", "ember-truth-helpers/helpers/or"], function (_exports, _or) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _or.default;
+    }
+  });
+  Object.defineProperty(_exports, "or", {
+    enumerable: true,
+    get: function () {
+      return _or.or;
+    }
+  });
+});
 ;define("shop/helpers/pluralize", ["exports", "ember-inflector/lib/helpers/pluralize"], function (_exports, _pluralize) {
   "use strict";
 
@@ -227,6 +466,25 @@
   _exports.default = void 0;
   var _default = _singularize.default;
   _exports.default = _default;
+});
+;define("shop/helpers/xor", ["exports", "ember-truth-helpers/helpers/xor"], function (_exports, _xor) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  Object.defineProperty(_exports, "default", {
+    enumerable: true,
+    get: function () {
+      return _xor.default;
+    }
+  });
+  Object.defineProperty(_exports, "xor", {
+    enumerable: true,
+    get: function () {
+      return _xor.xor;
+    }
+  });
 });
 ;define("shop/initializers/app-version", ["exports", "ember-cli-app-version/initializer-factory", "shop/config/environment"], function (_exports, _initializerFactory, _environment) {
   "use strict";
@@ -820,8 +1078,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "NtDIwRSh",
-    "block": "{\"symbols\":[\"shop\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"container\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"inner-container\"],[8],[0,\"\\n    \"],[7,\"h2\",true],[8],[0,\"SHOPS\"],[9],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"shops-container\"],[8],[0,\"\\n      \"],[7,\"ul\",true],[10,\"class\",\"list\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"model\"]]],null,{\"statements\":[[0,\"          \"],[7,\"li\",true],[8],[0,\"\\n\"],[4,\"link-to\",null,[[\"class\",\"route\",\"model\"],[\"ll-shops\",\"shops.products\",[23,1,[\"id\"]]]],{\"statements\":[[0,\"              \"],[1,[23,1,[\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"            \"],[7,\"div\",true],[10,\"class\",\"buttons\"],[8],[0,\"\\n              \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[10,\"type\",\"button\"],[8],[0,\"Edit\"],[9],[0,\"\\n              \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteShop\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n            \"],[9],[0,\"\\n          \"],[9],[0,\"\\n          \"],[1,[28,\"log\",[[23,1,[]]],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"add-shop\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingShop\"]]],null,{\"statements\":[[0,\"        \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveShop\"],null]],[8],[0,\"\\n          \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newShopName\"]],\"New Shop\"]]],false],[0,\"\\n          \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n            Add\\n          \"],[9],[0,\"\\n          \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddShop\"],null]],[8],[0,\"\\n            \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[7,\"button\",true],[10,\"name\",\"button\"],[10,\"class\",\"add-btn\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addShop\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new shop\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "1yNf7895",
+    "block": "{\"symbols\":[\"shop\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"container\"],[8],[0,\"\\n  \"],[7,\"div\",true],[10,\"class\",\"inner-container\"],[8],[0,\"\\n    \"],[7,\"h2\",true],[8],[0,\"SHOPS\"],[9],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"shops-container\"],[8],[0,\"\\n      \"],[7,\"ul\",true],[10,\"class\",\"list\"],[8],[0,\"\\n\"],[4,\"each\",[[24,[\"model\"]]],null,{\"statements\":[[0,\"          \"],[7,\"li\",true],[8],[0,\"\\n\"],[4,\"if\",[[28,\"eq\",[[24,[\"id\"]],[23,1,[\"id\"]]],null]],null,{\"statements\":[[0,\"              \"],[7,\"div\",true],[10,\"class\",\"edit-form\"],[8],[0,\"\\n                \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"editedName\"]],\"new name\"]]],false],[0,\"\\n                \"],[7,\"div\",true],[10,\"class\",\"buttons\"],[8],[0,\"\\n                  \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"editShop\",[23,1,[\"id\"]]],null]],[8],[0,\"Save\"],[9],[0,\"\\n                \"],[9],[0,\"\\n              \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"link-to\",null,[[\"class\",\"route\",\"model\"],[\"ll-shops\",\"shops.products\",[23,1,[\"id\"]]]],{\"statements\":[[0,\"                \"],[1,[23,1,[\"name\"]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"              \"],[7,\"div\",true],[10,\"class\",\"buttons\"],[8],[0,\"\\n                \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"toggleEdit\",[23,1,[\"id\"]]],null]],[10,\"type\",\"submit\"],[8],[0,\"Edit\"],[9],[0,\"\\n                \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteShop\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n              \"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"          \"],[9],[0,\"\\n          \"],[1,[28,\"log\",[[23,1,[]]],null],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n    \"],[7,\"div\",true],[10,\"class\",\"add-shop\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingShop\"]]],null,{\"statements\":[[0,\"        \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveShop\"],null]],[8],[0,\"\\n          \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newShopName\"]],\"New Shop\"]]],false],[0,\"\\n          \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n            Add\\n          \"],[9],[0,\"\\n          \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddShop\"],null]],[8],[0,\"\\n            \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n          \"],[9],[0,\"\\n        \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[7,\"button\",true],[10,\"name\",\"button\"],[10,\"class\",\"add-btn\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addShop\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new shop\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/shops/index.hbs"
     }
@@ -838,8 +1096,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "byl75gTm",
-    "block": "{\"symbols\":[\"product\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"prod-container\"],[8],[0,\"\\n  \"],[7,\"h2\",true],[8],[0,\"Products\"],[9],[0,\"\\n  \"],[7,\"table\",true],[10,\"class\",\"products\"],[8],[0,\"\\n    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"NAME\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"title right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"QTY\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"PRICE\"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"      \"],[7,\"tr\",true],[8],[0,\"\\n        \"],[7,\"th\",true],[8],[1,[23,1,[\"name\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"prod\"],[8],[1,[23,1,[\"quantity\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"right\"],[8],[0,\"$\"],[1,[23,1,[\"price\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[8],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"editProduct\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"\\n            \"],[1,[28,\"if\",[[24,[\"isEditing\"]],\"Save\",\"Edit\"],null],false],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteProduct\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[0,\"Total Price $\"],[1,[22,\"totalPrice\"],false],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"add-product\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingProduct\"]]],null,{\"statements\":[[0,\"      \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveProduct\"],null]],[8],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductName\"]],\"New Product Name\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductQuantity\"]],\"New Product Quantity\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductPrice\"]],\"New Product Price\"]]],false],[0,\"\\n        \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n          Add\\n        \"],[9],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddProduct\"],null]],[8],[0,\"\\n          \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"button\",true],[10,\"name\",\"button\"],[10,\"class\",\"add-btn\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addProduct\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new product\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "GWkmUhKC",
+    "block": "{\"symbols\":[\"product\"],\"statements\":[[7,\"div\",true],[10,\"class\",\"prod-container\"],[8],[0,\"\\n  \"],[7,\"h2\",true],[8],[0,\"Products\"],[9],[0,\"\\n  \"],[7,\"table\",true],[10,\"class\",\"products\"],[8],[0,\"\\n    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"NAME\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"title right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"QTY\"],[9],[0,\"\\n      \"],[9],[0,\"\\n      \"],[7,\"th\",true],[10,\"class\",\"header right\"],[8],[0,\"\\n        \"],[7,\"h2\",true],[8],[0,\"PRICE\"],[9],[0,\"\\n      \"],[9],[0,\"\\n    \"],[9],[0,\"\\n\"],[4,\"each\",[[24,[\"model\",\"products\"]]],null,{\"statements\":[[0,\"      \"],[7,\"tr\",true],[8],[0,\"\\n        \"],[7,\"th\",true],[8],[1,[23,1,[\"name\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"prod\"],[8],[1,[23,1,[\"quantity\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[10,\"class\",\"right\"],[8],[0,\"$\"],[1,[23,1,[\"price\"]],false],[9],[0,\"\\n        \"],[7,\"th\",true],[8],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"editProduct\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"\\n            \"],[1,[28,\"if\",[[24,[\"isEditing\"]],\"Save\",\"Edit\"],null],false],[0,\"\\n          \"],[9],[0,\"\\n          \"],[7,\"button\",true],[10,\"class\",\"btn delete\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteProduct\",[23,1,[\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"Delete\"],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"    \"],[7,\"tr\",true],[8],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[9],[0,\"\\n      \"],[7,\"th\",true],[8],[0,\"Total Price $\"],[1,[22,\"totalPrice\"],false],[9],[0,\"\\n    \"],[9],[0,\"\\n  \"],[9],[0,\"\\n\\n  \"],[7,\"div\",true],[10,\"class\",\"add-product\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isAddingProduct\"]]],null,{\"statements\":[[0,\"      \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveProduct\"],null]],[8],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductName\"]],\"New Product Name\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductQuantity\"]],\"New Product Quantity\"]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"type\",\"value\",\"placeholder\"],[\"text\",[24,[\"newProductPrice\"]],\"New Product Price\"]]],false],[0,\"\\n        \"],[7,\"button\",true],[11,\"disabled\",[22,\"isAddButtonDisabled\"]],[10,\"type\",\"submit\"],[8],[0,\"\\n          Add\\n        \"],[9],[0,\"\\n        \"],[7,\"span\",true],[10,\"class\",\"rr-cancel-icon\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"cancelAddProduct\"],null]],[8],[0,\"\\n          \"],[7,\"i\",true],[10,\"class\",\"fa fa-times\"],[10,\"aria-hidden\",\"true\"],[8],[9],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"      \"],[7,\"button\",true],[10,\"name\",\"button\"],[10,\"class\",\"add-btn\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"addProduct\"],null]],[10,\"type\",\"button\"],[8],[0,\"Add new product\"],[9],[0,\"\\n\"]],\"parameters\":[]}],[0,\"  \"],[9],[0,\"\\n  \"],[7,\"section\",true],[10,\"class\",\"edit-section\"],[8],[0,\"\\n\"],[4,\"if\",[[24,[\"isEditing\"]]],null,{\"statements\":[[0,\"      \"],[7,\"form\",true],[11,\"onsubmit\",[28,\"action\",[[23,0,[]],\"saveProduct\"],null]],[8],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"class\",\"value\"],[\"input-edit\",[24,[\"newProductName\"]]]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"class\",\"value\"],[\"input-edit\",[24,[\"newProductQuantity\"]]]]],false],[0,\"\\n        \"],[1,[28,\"input\",null,[[\"class\",\"value\"],[\"input-edit\",[24,[\"newProductPrice\"]]]]],false],[0,\"\\n        \"],[7,\"button\",true],[10,\"class\",\"btn edit\"],[11,\"onclick\",[28,\"action\",[[23,0,[]],\"deleteProduct\",[24,[\"product\",\"id\"]]],null]],[10,\"type\",\"button\"],[8],[0,\"\\n          \"],[1,[28,\"if\",[[24,[\"isEditing\"]],\"Save\",\"Edit\"],null],false],[0,\"\\n        \"],[9],[0,\"\\n      \"],[9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"  \"],[9],[0,\"\\n\"],[9],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "shop/templates/shops/products.hbs"
     }
@@ -899,7 +1157,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("shop/app")["default"].create({"name":"shop","version":"0.0.0+873f39f8"});
+            require("shop/app")["default"].create({"name":"shop","version":"0.0.0+c182a48c"});
           }
         
 //# sourceMappingURL=shop.map

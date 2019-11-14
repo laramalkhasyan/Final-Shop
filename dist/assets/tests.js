@@ -22,7 +22,7 @@ define("shop/tests/lint/app.lint-test", [], function () {
   });
   QUnit.test('controllers/shops/products.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'controllers/shops/products.js should pass ESLint\n\n4:9 - \'set\' is defined but never used. (no-unused-vars)\n22:9 - Don\'t introduce side-effects in computed properties (ember/no-side-effects)\n48:21 - \'productId\' is defined but never used. (no-unused-vars)');
+    assert.ok(false, 'controllers/shops/products.js should pass ESLint\n\n49:17 - \'productId\' is defined but never used. (no-unused-vars)\n56:9 - Unexpected console statement. (no-console)');
   });
   QUnit.test('models/product.js', function (assert) {
     assert.expect(1);
@@ -83,7 +83,7 @@ define("shop/tests/lint/templates.template.lint-test", [], function () {
   });
   QUnit.test('shop/templates/shops/index.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops/index.hbs should pass TemplateLint.\n\nshop/templates/shops/index.hbs\n  27:39  error  Interaction added to non-interactive element  no-invalid-interactive\n  16:10  error  Unexpected {{log}} usage.  no-log\n');
+    assert.ok(false, 'shop/templates/shops/index.hbs should pass TemplateLint.\n\nshop/templates/shops/index.hbs\n  36:39  error  Interaction added to non-interactive element  no-invalid-interactive\n  25:10  error  Unexpected {{log}} usage.  no-log\n  9:25  error  you must use double quotes in templates  quotes\n');
   });
   QUnit.test('shop/templates/shops/products.hbs', function (assert) {
     assert.expect(1);

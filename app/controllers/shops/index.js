@@ -4,7 +4,9 @@ import { empty } from '@ember/object/computed';
 export default Controller.extend({
   isAddingShop: false,
   newShopName: '',
-
+  isEditing:false,
+  editedName:'',
+  id:'',
   isAddButtonDisabled: empty('newShopName'),
 
   actions: {
@@ -25,8 +27,20 @@ export default Controller.extend({
       });
       // this.transitionToRoute('bands.band.songs', newBand.id);
     },
-    editShop(){
-
+    toggleEdit(shopId){
+      this.set('id',shopId);
+      this.toggleProperty('isEditing');
+    },
+    editShop(shopId){
+      let name=this.editedName;
+      this.store.findRecord('shop', shopId).then((shop) => {
+        shop.set("name",name);
+        shop.save();
+      });
+      this.setProperties({
+        editedName:'',
+        id:'',
+      })
     },
     deleteShop(shopId){
       this.store.findRecord('shop', shopId).then(function (shop){
