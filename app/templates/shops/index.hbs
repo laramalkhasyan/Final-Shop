@@ -7,9 +7,12 @@
           <li>
             {{#if (eq id shop.id)}}
               <div class='edit-form'>
-                {{input type="text" value=editedName placeholder="new name"}}
+                <div>
+                  {{input type="text" value=editedName placeholder="new name"}}
+                </div>                
                 <div class="buttons">
                   <button class="btn edit" onclick={{action "editShop" shop.id}}>Save</button>
+                  <button class="btn delete" onclick={{action "cancelEdit" shop.id}}>Cancel</button>
                 </div>
               </div>
             {{else}}
@@ -17,8 +20,8 @@
                 {{shop.name}}
               {{/link-to}}
               <div class="buttons">
-                <button type="submit" class="btn edit" onclick={{action "toggleEdit" shop.id}}>Edit</button>
-                <button type="button" class="btn delete" onclick={{action "deleteShop" shop.id}}>Delete</button>
+                <button class="btn edit" onclick={{action "toggleEdit" shop.id}}>Edit</button>
+                <button class="btn delete" onclick={{action "deleteShop" shop.id}}>Delete</button>
               </div>
             {{/if}}
           </li>

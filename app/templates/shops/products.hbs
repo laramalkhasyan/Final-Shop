@@ -13,31 +13,27 @@
       </th>
     </tr>
     {{#each model.products as |product|}}
-      {{!-- {{#if isEditing}}
+      {{#if (eq id product.id)}}
         <tr>
-          <th>{{input class="input-edit" value=product.name}}</th>
-          <th>{{input class="input-edit" value=product.quantity}}</th>
-          <th>{{input class="input-edit" value=product.price}}</th>
-        </tr>
-        <th>
-          <button type="button" class="btn edit"  onclick={{action "toggleIsEditing"}}>
-            {{if isEditing "Save" "Edit"}}
-          </button>
-          <button type="button" class="btn delete" onclick={{action "deleteProduct" product.id}}>Delete</button>
+          <th>{{input class="input-edit" value=editedName placeholder="New Product Name"}}</th>
+          <th>{{input class="input-edit" value=editedQuantity placeholder="New Product Quantity"}}</th>
+          <th>{{input class="input-edit" value=editedPrice placeholder="New Product Price"}}</th>
+          <th>
+          <button type="button" class="btn edit"  onclick={{action "editProduct" product.id}}>Save</button>
+          <button type="button" class="btn delete" onclick={{action "cancelEdit"}}>Cancel</button>
         </th>
-      {{else}} --}}
+        </tr>        
+      {{else}}
       <tr>
         <th>{{product.name}}</th>
         <th class="prod">{{product.quantity}}</th>
-        <th class="right">${{product.price}}</th>
+        <th class="right">${{product.price}}</th>        
         <th>
-          <button type="button" class="btn edit"  onclick={{action "editProduct" product.id}}>
-            {{if isEditing "Save" "Edit"}}
-          </button>
+          <button type="button" class="btn edit"  onclick={{action "toggleIsEditing" product.id}}>Edit</button>
           <button type="button" class="btn delete" onclick={{action "deleteProduct" product.id}}>Delete</button>
         </th>
       </tr>
-      {{!-- {{/if}}       --}}
+      {{/if}}
     {{/each}}
     <tr>
       <th></th>
@@ -45,13 +41,12 @@
       <th>Total Price ${{totalPrice}}</th>
     </tr>
   </table>
-
   <div class="add-product">
     {{#if isAddingProduct}}
       <form onsubmit={{action "saveProduct"}}>
-        {{input type="text"  value=newProductName placeholder="New Product Name"}}
-        {{input type="text"  value=newProductQuantity placeholder="New Product Quantity"}}
-        {{input type="text"  value=newProductPrice placeholder="New Product Price"}}
+        {{input type="text"  value=editedName placeholder="New Product Name"}}
+        {{input type="text"  value=editedQuantity placeholder="New Product Quantity"}}
+        {{input type="text"  value=editedPrice placeholder="New Product Price"}}
         <button type="submit"  disabled={{isAddButtonDisabled}}>
           Add
         </button>
@@ -63,16 +58,4 @@
       <button type="button" name="button" class="add-btn" onclick={{action "addProduct"}}>Add new product</button>
     {{/if}}
   </div>
-  <section class="edit-section">
-    {{#if isEditing}}
-      <form onsubmit={{action "saveProduct"}}>
-        {{input class="input-edit" value=newProductName}}
-        {{input class="input-edit" value=newProductQuantity}}
-        {{input class="input-edit" value=newProductPrice}}
-        <button type="button" class="btn edit"  onclick={{action "deleteProduct" product.id}}>
-          {{if isEditing "Save" "Edit"}}
-        </button>
-      </form>
-    {{/if}}
-  </section>
 </div>

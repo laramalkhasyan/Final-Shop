@@ -1,104 +1,117 @@
 .container {
-  background-color: white;
+    background-color: white;
 }
 
 .inner-container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding-bottom: 50px;
 }
 
 .shops-container {
-  width: 50%;
-  padding: 20px;
-  border: 2px dotted grey;
-  padding-bottom: 100px;
+    width: 50%;
+    padding: 20px;
+    border: 2px dotted grey;
+    padding-bottom: 100px;
 }
 
 ul {
-  list-style: none;
+    list-style: none;
 }
 
 li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px;
-  padding: 10px;
-  border-bottom: 1px solid grey;
-  font-size: 20px;
-}
-.edit-form{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.btn {
-  color: white;
-  font-size: 20px;
-  padding: 8px 30px;
-  border: none;
-}
-
-.edit {
-  background-color: red;
-}
-
-.delete {
-  background-color: green;
-}
-
-.ll-shops {
-  text-decoration: none;
-  color: gray;
-}
-table{
-
-  text-align: center;
-}
-th{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
     border-bottom: 1px solid grey;
     font-size: 20px;
 }
-.title{
-  margin: auto 0px;
-  border: 2px dotted grey;
-  border-top: none;
-}
-.products{
-  border: 2px dotted grey;
 
+.edit-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.header{
-  border-bottom: 2px dotted grey;
-  text-align: center;
+
+.btn {
+    color: white;
+    font-size: 20px;
+    padding: 8px 30px;
+    border: none;
 }
-.prod{
-  border-left: 2px dotted grey;
-  border-right: 2px dotted grey;
+
+.edit {
+    background-color: red;
 }
-.prod-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+.delete {
+    background-color: green;
 }
-.pro-btn{
-  display: flex;
+
+.ll-shops {
+    text-decoration: none;
+    color: gray;
 }
-.right{
-  border-right: 2px dotted grey;
+
+table {
+    text-align: center;
 }
-.border{
+
+th {
+    border-bottom: 1px solid grey;
+    font-size: 20px;
+}
+
+.title {
+    margin: auto 0px;
+    border: 2px dotted grey;
+    border-top: none;
+    padding: 10px;
+}
+
+.products {
+    border: 2px dotted grey;
+}
+
+.header {
+    border-bottom: 2px dotted grey;
+    text-align: center;
+    padding: 10px;
+}
+
+.prod {
+    border-left: 2px dotted grey;
+    border-right: 2px dotted grey;
+    padding: 10px;
+}
+
+.prod-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pro-btn {
+    display: flex;
+}
+
+.right {
+    border-right: 2px dotted grey;
+}
+
+.border {
     border-top: 2px dotted grey;
 }
-.add-btn{
-  margin-top:20px;
-  padding: 8px;
-  color: white;
-  font-size: 20px;
-  background-color: slategrey;
+
+.add-btn {
+    margin-top: 20px;
+    padding: 8px;
+    color: white;
+    font-size: 20px;
+    background-color: slategrey;
 }

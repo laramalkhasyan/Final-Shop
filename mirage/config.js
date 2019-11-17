@@ -7,4 +7,5 @@ export default function() {
     this.post('shops');
     this.post('products');
     this.delete('/products/:id');
+    this.patch('/shops/:id');
 }

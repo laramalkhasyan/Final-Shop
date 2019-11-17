@@ -22,7 +22,7 @@ define("shop/tests/lint/app.lint-test", [], function () {
   });
   QUnit.test('controllers/shops/products.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'controllers/shops/products.js should pass ESLint\n\n49:17 - \'productId\' is defined but never used. (no-unused-vars)\n56:9 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'controllers/shops/products.js should pass ESLint\n\n83:17 - Unexpected console statement. (no-console)');
   });
   QUnit.test('models/product.js', function (assert) {
     assert.expect(1);
@@ -83,11 +83,11 @@ define("shop/tests/lint/templates.template.lint-test", [], function () {
   });
   QUnit.test('shop/templates/shops/index.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops/index.hbs should pass TemplateLint.\n\nshop/templates/shops/index.hbs\n  36:39  error  Interaction added to non-interactive element  no-invalid-interactive\n  25:10  error  Unexpected {{log}} usage.  no-log\n  9:25  error  you must use double quotes in templates  quotes\n');
+    assert.ok(false, 'shop/templates/shops/index.hbs should pass TemplateLint.\n\nshop/templates/shops/index.hbs\n  39:39  error  Interaction added to non-interactive element  no-invalid-interactive\n  28:10  error  Unexpected {{log}} usage.  no-log\n  9:25  error  you must use double quotes in templates  quotes\n');
   });
   QUnit.test('shop/templates/shops/products.hbs', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'shop/templates/shops/products.hbs should pass TemplateLint.\n\nshop/templates/shops/products.hbs\n  58:37  error  Interaction added to non-interactive element  no-invalid-interactive\n  3:2  error  Tables must have a table group (thead, tbody or tfoot).  table-groups\n');
+    assert.ok(false, 'shop/templates/shops/products.hbs should pass TemplateLint.\n\nshop/templates/shops/products.hbs\n  27:6  error  Incorrect indentation for `<tr>` beginning at L27:C6. Expected `<tr>` to be at an indentation of 8 but was found at 6.  block-indentation\n  24:13  error  Incorrect indentation for `th` beginning at L21:C10. Expected `</th>` ending at L24:C13 to be at an indentation of 10 but was found at 8.  block-indentation\n  22:10  error  Incorrect indentation for `<button>` beginning at L22:C10. Expected `<button>` to be at an indentation of 12 but was found at 10.  block-indentation\n  23:10  error  Incorrect indentation for `<button>` beginning at L23:C10. Expected `<button>` to be at an indentation of 12 but was found at 10.  block-indentation\n  53:37  error  Interaction added to non-interactive element  no-invalid-interactive\n  3:2  error  Tables must have a table group (thead, tbody or tfoot).  table-groups\n');
   });
 });
 define("shop/tests/lint/tests.lint-test", [], function () {
